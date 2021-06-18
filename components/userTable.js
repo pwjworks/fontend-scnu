@@ -1,28 +1,39 @@
 import { Table, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 const { Column } = Table;
-import getFetcher from '../pages/api/fecher';
+import { getFetcher } from '../pages/api/fechers';
+import delUsers from '../pages/api/del-users';
 import useSWR from "swr";
 
 export default function userTable() {
-    const { data, error } = useSWR('http://localhost:8080/user', getFetcher)
+    const { data } = useSWR('http://localhost:8080/user', getFetcher)
+    console.log(data)
     const [selected, setSelected] = useState([]);
     useEffect(() => {
         console.log(selected);
     }, [selected])
 
     const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
+        onChange: (selectedRowKeys) => {
             setSelected(selectedRowKeys);
         },
     };
+    const handleDelete = function () {
+        if (selected.length !== 0) {
+            delUsers({ ids: selected }).then((res) => {
+                console.log("delete " + res);
+                setSelected([]);
+
+            })
+        }
+    }
     return (
         <div>
             <div style={{ marginBottom: 16 }}>
-                <Button type="primary">
+                <Button type="primary" >
                     Add
                 </Button>
-                <Button type="primary" danger style={{ marginLeft: 16 }}>
+                <Button type="primary" onClick={(e) => handleDelete()} danger style={{ marginLeft: 16 }} >
                     Delete
                 </Button>
 
