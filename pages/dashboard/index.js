@@ -3,7 +3,7 @@ import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 import React, { useState, useEffect } from 'react';
-import UserTable from '../../components/userTable';
+import UserManagementPanel from '../../components/UserManagementPanel';
 
 
 export default function Parent() {
@@ -69,7 +69,7 @@ function Child() {
               minHeight: 280,
             }}
           >
-            <UserTable></UserTable>
+            <UserManagementPanel></UserManagementPanel>
           </Content>
         </Layout>
       </Layout>
