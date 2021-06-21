@@ -1,7 +1,23 @@
 import { Layout } from "antd";
-import { getAllProductsId } from "../../lib/product";
+import getProductsId from '../api/product/get-products-id'
+import getProductDetails from "../api/product/get-product-details";
 
-export default function Post({ postData }) {
+const getAllProductsId = function () {
+  const res = getProductsId().then((res) => {
+    resolve(res);
+  });
+  console.log(res);
+  return ids.map(productId => {
+    return {
+      params: {
+        id: productId
+      }
+    }
+  })
+}
+
+
+export default function productDetails({ postData }) {
   return (
     <Layout>
       {postData.id}
@@ -20,7 +36,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const postData = getProductData(params.id)
+  const postData = getProductDetails(params.id)
   return {
     props: {
       postData
