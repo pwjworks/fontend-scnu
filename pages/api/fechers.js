@@ -1,5 +1,21 @@
-import axios from 'axios'
-const getFetcher = url => axios.get(url).then(res => res.data);
-const postFetcher = (url, params) => axios.post(url, params).then(res => res.data);
+import axios from "axios"
 
-export { getFetcher, postFetcher };
+export function getFetcher(url) {
+    return new Promise((resolve, reject) => {
+        axios.get(url).then((response) => {
+            resolve(response);
+        }, (error) => {
+            reject(error);
+        });
+    })
+}
+
+export function postFetcher(url, params) {
+    return new Promise((resolve, reject) => {
+        axios.post(url, params).then((response) => {
+            resolve(response);
+        }, (error) => {
+            reject(error);
+        });
+    })
+}

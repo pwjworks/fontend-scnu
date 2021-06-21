@@ -1,11 +1,5 @@
-import axios from "axios"
+import { postFetcher } from "../fechers"
 
-export default function updateUsers(params) {
-    return new Promise((resolve, reject) => {
-        axios.post("http://localhost:8080/updateUser", params).then((response) => {
-            resolve(response);
-        }, (error) => {
-            reject(error);
-        });
-    })
+export default function updateUser(params) {
+    return postFetcher("http://localhost:8080/updateUser", params);
 }

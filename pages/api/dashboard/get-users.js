@@ -1,11 +1,5 @@
-import axios from "axios"
+import { getFetcher } from "../fechers"
 
-export default function getUsers() {
-    return new Promise((resolve, reject) => {
-        axios.get("http://localhost:8080/users").then((response) => {
-            resolve(response);
-        }, (error) => {
-            reject(error);
-        });
-    })
+export default function delUsers() {
+    return getFetcher("http://localhost:8080/users");
 }

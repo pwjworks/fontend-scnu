@@ -1,11 +1,5 @@
-import axios from "axios"
+import { postFetcher } from "../fechers"
 
 export default function delUsers(params) {
-    return new Promise((resolve, reject) => {
-        axios.post("http://localhost:8080/delUsers", params).then((response) => {
-            resolve(response);
-        }, (error) => {
-            reject(error);
-        });
-    })
+    return postFetcher("http://localhost:8080/delUsers", params);
 }
