@@ -1,14 +1,14 @@
 import { Table, Button, Modal, Input, Space, Form, notification, InputNumber, Popconfirm, Typography } from 'antd';
 import { UserOutlined, CommentOutlined, MailOutlined, SmileOutlined } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
-import delUsers from '../pages/api/dashboard/del-users';
-import getUsers from '../pages/api/dashboard/get-users';
+import delCustomers from '../pages/api/dashboard/del-customers';
+import getCustomers from '../pages/api/dashboard/get-customers';
 import addUser from '../pages/api/dashboard/add-user';
-import updateUser from '../pages/api/dashboard/update-user';
+import updateCustomer from '../pages/api/dashboard/update-customer';
 
 export default function UserManagementPanel() {
 
-  const [users, setUsers] = useState([]);    // 用户数据
+  const [customers, setCustomers] = useState([]);    // 用户数据
   const [selected, setSelected] = useState([]);    // 已选数据
   const [disabled, setDisabled] = useState(true);    // 对话框可见性
   const [visible, setVisible] = useState(false);    // 对话框可见性
@@ -17,8 +17,8 @@ export default function UserManagementPanel() {
   const [editingKey, setEditingKey] = useState('');
   // 页面加载时请求数据
   useEffect(() => {
-    getUsers().then(res => {
-      setUsers(res.data);
+    getCustomers().then(res => {
+      setCustomers(res.data);
     })
   }, []);
   useEffect(() => {
@@ -42,14 +42,14 @@ export default function UserManagementPanel() {
   }, [selected])
   const handleDelete = function () {
     if (selected.length !== 0) {
-      delUsers({ ids: selected }).then((res) => {
+      delCustomers({ ids: selected }).then((res) => {
         notification.open({
           message: '删除成功',
           description:
             '已经删除' + res.data.ret + '条数据',
           icon: <SmileOutlined style={{ color: '#108ee9' }} />,
         });
-        setUsers(res.data.users);
+        setCustomers(res.data.customers);
         setSelected([]);
       })
     }
@@ -59,8 +59,8 @@ export default function UserManagementPanel() {
     setVisible(true);
   };
   const handleCancel = () => {
-    getUsers().then(res => {
-      setUsers(res.data);
+    getCustomers().then(res => {
+      setCustomers(res.data);
     })
     setVisible(false);
   };
@@ -97,16 +97,17 @@ export default function UserManagementPanel() {
 
 
 
-  const isEditing = (record) => record.id === editingKey;
+  const isEditing = (record) => record.customerId === editingKey;
 
   const edit = (record) => {
     form.setFieldsValue({
-      name: '',
-      age: '',
-      address: '',
+      Tel: '',
+      Mail: '',
+      Male: '',
+      Address: '',
       ...record,
     });
-    setEditingKey(record.id);
+    setEditingKey(record.customerId);
   };
 
   const cancel = () => {
@@ -116,32 +117,47 @@ export default function UserManagementPanel() {
 
   const columns = [
     {
-      title: 'id',
-      dataIndex: 'id',
+      title: 'Id',
+      dataIndex: 'customerId',
       width: '10%',
-      key: 'id',
+      key: 'customerId',
       editable: true,
     },
 
     {
-      title: 'name',
-      dataIndex: 'name',
+      title: 'Tel',
+      dataIndex: 'customerTel',
       width: '15%',
-      key: 'name',
+      key: 'customerTel',
       editable: true,
     },
     {
-      title: 'age',
-      dataIndex: 'age',
+      title: 'Male',
+      dataIndex: 'customerMale',
       width: '15%',
-      key: 'age',
+      key: 'customerMale',
+      editable: true,
+    },
+
+    {
+      title: 'Birth',
+      dataIndex: 'customerBirth',
+      width: '15%',
+      key: 'customerBirth',
       editable: true,
     },
     {
-      title: 'email',
-      dataIndex: 'email',
-      width: '40%',
-      key: 'email',
+      title: 'Mail',
+      dataIndex: 'customerMail',
+      width: '15%',
+      key: 'customerMail',
+      editable: true,
+    },
+    {
+      title: 'Address',
+      dataIndex: 'customerAddress',
+      width: '25%',
+      key: 'customerAddress',
       editable: true,
     },
     {
@@ -194,14 +210,16 @@ export default function UserManagementPanel() {
   const save = async (key) => {
     try {
       const row = await form.validateFields();
-      updateUser(row).then((res) => {
+      updateCustomer(row).then((res) => {
         notification.open({
           message: '更改成功',
           description:
             '已经更改' + res.data.ret + '条数据',
           icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-        });
-        setUsers(res.data.users);
+        }
+        );
+        console.log(res.data);
+        setCustomers(res.data.customers);
       });
       setEditingKey('');
     } catch (errInfo) {
@@ -235,23 +253,37 @@ export default function UserManagementPanel() {
               onFinishFailed={onFinishFailed}
             >
               <Form.Item
-                label="Username"
-                name="name"
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                label="Tel"
+                name="customerTel"
+                rules={[{ required: true, message: 'Please input your Tel!' }]}
               >
                 <Input prefix={<UserOutlined />} style={{ width: 300 }} />
               </Form.Item>
               <Form.Item
-                label="Age"
-                name="age"
-                rules={[{ required: true, message: 'Please input your age!' }]}
+                label="Mail"
+                name="customerMail"
+                rules={[{ required: true, message: 'Please input your Mail!' }]}
               >
                 <Input prefix={<CommentOutlined />} style={{ width: 300 }} />
               </Form.Item>
               <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ required: true, message: 'Please input your email!' }]}
+                label="Male"
+                name="customerMale"
+                rules={[{ required: true, message: 'Please input your Male!' }]}
+              >
+                <Input prefix={<MailOutlined />} style={{ width: 300 }} />
+              </Form.Item>
+              <Form.Item
+                label="Address"
+                name="customerAddress"
+                rules={[{ required: true, message: 'Please input your Address!' }]}
+              >
+                <Input prefix={<MailOutlined />} style={{ width: 300 }} />
+              </Form.Item>
+              <Form.Item
+                label="Birth"
+                name="customerBirth"
+                rules={[{ required: true, message: 'Please input your Birth!' }]}
               >
                 <Input prefix={<MailOutlined />} style={{ width: 300 }} />
               </Form.Item>
@@ -275,10 +307,10 @@ export default function UserManagementPanel() {
             },
           }}
           bordered
-          dataSource={users}
+          dataSource={customers}
           columns={mergedColumns}
           rowClassName="editable-row"
-          rowKey={data => data.id}
+          rowKey={data => data.customerId}
           rowSelection={rowSelection}
           pagination={{ pageSize: 10 }}
         />
