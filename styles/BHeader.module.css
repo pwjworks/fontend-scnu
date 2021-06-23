@@ -1,0 +1,32 @@
+.mainHeader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    background: #F7F8FA;
+}
+.title{
+    display: block;
+    margin: auto;
+    font-size: 50px;
+}
+.subHeader{
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.subHeaderNav{
+    background: #FFFFFF;
+    
+}
+.subHeaderRight{
+    width: 280px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+
+}
+.search{
+    float: right;
+}

@@ -1,6 +1,17 @@
+
+.mainContainer{
+    display: flex;
+}
 .main{
-    padding:3rem;
+    padding: 1rem;
+}
+.selection{
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    background: white;
+    width: 700px;
 }
 .productCard{
-    width: 300px;
+    border-radius: 5px;
+    width: 280px;
 }

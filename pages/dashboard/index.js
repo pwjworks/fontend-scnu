@@ -43,10 +43,10 @@ function Child() {
               style={{ height: '100%', borderRight: 0 }}
             >
               <SubMenu key="sub1" icon={<UserOutlined />} title="用户管理">
-                <Menu.Item key="1">option1</Menu.Item>
+                <Menu.Item key="1">用户信息</Menu.Item>
 
               </SubMenu>
-              <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
+              <SubMenu key="sub2" icon={<LaptopOutlined />} title="商品管理">
                 <Menu.Item key="5">option5</Menu.Item>
 
               </SubMenu>
