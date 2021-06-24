@@ -5,6 +5,7 @@ const { Header, Content, Sider } = Layout;
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import UserManagementPanel from '../../components/UserManagementPanel';
+import ProductManagementPanel from "../../components/ProductManagementPanel"
 
 
 export default function Parent() {
@@ -47,7 +48,7 @@ function Child() {
 
                 </SubMenu>
                 <SubMenu key="sub2" icon={<LaptopOutlined />} title="商品管理">
-                  <Menu.Item key="2"><Link to="/dashboard/customers">商品信息</Link></Menu.Item>
+                  <Menu.Item key="2"><Link to="/dashboard/products">商品信息</Link></Menu.Item>
 
                 </SubMenu>
                 <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
@@ -58,8 +59,8 @@ function Child() {
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-                <Breadcrumb.Item>Customers</Breadcrumb.Item>
               </Breadcrumb>
               <Content
                 className="site-layout-background"
@@ -75,7 +76,7 @@ function Child() {
                       <UserManagementPanel />
                     </Route>
                     <Route path="/dashboard/products">
-
+                      <ProductManagementPanel />
                     </Route>
                   </Switch>
                 </Layout>

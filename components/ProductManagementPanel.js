@@ -2,13 +2,13 @@ import { Table, Button, Modal, Input, Space, Form, notification, InputNumber, Po
 import { UserOutlined, CommentOutlined, MailOutlined, SmileOutlined } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
 import delCustomers from '../pages/api/dashboard/del-customers';
-import getCustomers from '../pages/api/dashboard/get-customers';
-import addUser from '../pages/api/dashboard/add-user';
+import getProducts from '../pages/api/dashboard/get-products';
+import addCustomer from '../pages/api/dashboard/add-customer';
 import updateCustomer from '../pages/api/dashboard/update-customer';
 
 export default function UserManagementPanel() {
 
-  const [customers, setCustomers] = useState([]);    // 用户数据
+  const [products, setProducts] = useState([]);    // 用户数据
   const [selected, setSelected] = useState([]);    // 已选数据
   const [disabled, setDisabled] = useState(true);    // 对话框可见性
   const [visible, setVisible] = useState(false);    // 对话框可见性
@@ -17,8 +17,9 @@ export default function UserManagementPanel() {
   const [editingKey, setEditingKey] = useState('');
   // 页面加载时请求数据
   useEffect(() => {
-    getCustomers().then(res => {
-      setCustomers(res.data);
+    getProducts().then(res => {
+      setProducts(res.data);
+      console.log(res.data)
     })
   }, []);
   useEffect(() => {
@@ -59,7 +60,7 @@ export default function UserManagementPanel() {
     setVisible(true);
   };
   const handleCancel = () => {
-    getCustomers().then(res => {
+    getProducts().then(res => {
       setCustomers(res.data);
     })
     setVisible(false);
@@ -80,7 +81,7 @@ export default function UserManagementPanel() {
     if (values !== null) {
       setLoading(true);
       console.log(values);
-      addUser(values).then((res) => {
+      addCustomer(values).then((res) => {
         notification.open({
           message: '添加成功',
           description:
@@ -97,17 +98,13 @@ export default function UserManagementPanel() {
 
 
 
-  const isEditing = (record) => record.customerId === editingKey;
+  const isEditing = (record) => record.productId === editingKey;
 
   const edit = (record) => {
     form.setFieldsValue({
-      Tel: '',
-      Mail: '',
-      Male: '',
-      Address: '',
       ...record,
     });
-    setEditingKey(record.customerId);
+    setEditingKey(record.productId);
   };
 
   const cancel = () => {
@@ -118,46 +115,52 @@ export default function UserManagementPanel() {
   const columns = [
     {
       title: 'Id',
-      dataIndex: 'customerId',
+      dataIndex: 'productId',
       width: '10%',
-      key: 'customerId',
+      key: 'productId',
+      editable: true,
+    },
+    {
+      title: 'Name',
+      dataIndex: 'productName',
+      width: '10%',
+      key: 'productName',
       editable: true,
     },
 
     {
-      title: 'Tel',
-      dataIndex: 'customerTel',
+      title: 'Num',
+      dataIndex: 'productNum',
       width: '15%',
-      key: 'customerTel',
+      key: 'productNum',
       editable: true,
     },
     {
-      title: 'Male',
-      dataIndex: 'customerMale',
+      title: 'Price',
+      dataIndex: 'price',
       width: '15%',
-      key: 'customerMale',
-      editable: true,
-    },
-
-    {
-      title: 'Birth',
-      dataIndex: 'customerBirth',
-      width: '15%',
-      key: 'customerBirth',
+      key: 'price',
       editable: true,
     },
     {
-      title: 'Mail',
-      dataIndex: 'customerMail',
+      title: 'Desc',
+      dataIndex: 'productCore',
       width: '15%',
-      key: 'customerMail',
+      key: 'productCore',
       editable: true,
     },
     {
-      title: 'Address',
-      dataIndex: 'customerAddress',
-      width: '25%',
-      key: 'customerAddress',
+      title: 'CategoryId',
+      dataIndex: 'categoryId',
+      width: '15%',
+      key: 'CategoryId',
+      editable: true,
+    },
+    {
+      title: 'BrandId',
+      dataIndex: 'brandId',
+      width: '15%',
+      key: 'brandId',
       editable: true,
     },
     {
@@ -307,7 +310,7 @@ export default function UserManagementPanel() {
             },
           }}
           bordered
-          dataSource={customers}
+          dataSource={products}
           columns={mergedColumns}
           rowClassName="editable-row"
           rowKey={data => data.customerId}

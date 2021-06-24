@@ -3,7 +3,7 @@ import { UserOutlined, CommentOutlined, MailOutlined, SmileOutlined } from '@ant
 import React, { useState, useEffect } from 'react';
 import delCustomers from '../pages/api/dashboard/del-customers';
 import getCustomers from '../pages/api/dashboard/get-customers';
-import addUser from '../pages/api/dashboard/add-user';
+import addCustomer from '../pages/api/dashboard/add-customer';
 import updateCustomer from '../pages/api/dashboard/update-customer';
 
 export default function UserManagementPanel() {
@@ -80,7 +80,7 @@ export default function UserManagementPanel() {
     if (values !== null) {
       setLoading(true);
       console.log(values);
-      addUser(values).then((res) => {
+      addCustomer(values).then((res) => {
         notification.open({
           message: '添加成功',
           description:
@@ -101,10 +101,6 @@ export default function UserManagementPanel() {
 
   const edit = (record) => {
     form.setFieldsValue({
-      Tel: '',
-      Mail: '',
-      Male: '',
-      Address: '',
       ...record,
     });
     setEditingKey(record.customerId);
