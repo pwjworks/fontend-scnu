@@ -16,13 +16,13 @@ export default function BHeader() {
       </Header>
       <Header className={styles.subHeader}>
         <Menu className={styles.subHeaderNav} mode="horizontal">
-          <Menu.Item key="1">nav 1</Menu.Item>
-          <Menu.Item key="2">nav 2</Menu.Item>
-          <Menu.Item key="3">nav 3</Menu.Item>
+          <Menu.Item key="1">手机</Menu.Item>
+          <Menu.Item key="2">衣服</Menu.Item>
+          <Menu.Item key="3">电脑</Menu.Item>
         </Menu>
         <div className={styles.subHeaderRight}>
-          <UserOutlined />
-          <ShoppingCartOutlined />
+          <UserOutlined style={{ fontSize: '16px' }} />
+          <ShoppingCartOutlined style={{ fontSize: '16px' }} />
           <Search className={styles.search} placeholder="input search text" style={{ width: 200 }} />
         </div>
       </Header>

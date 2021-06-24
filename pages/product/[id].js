@@ -57,8 +57,7 @@ function Child({ postData }) {
               <Text type="danger" className={styles.realPrice} strong>{postData.price}</Text>
               <Text className={styles.deletedPrice} delete>13999</Text>
             </div>
-            <Button type="primary" icon={<DownloadOutlined />} size="large">                加入购物车
-            </Button>
+            <Button type="primary" icon={<DownloadOutlined />} size="large">加入购物车</Button>
 
           </div>
         </div>

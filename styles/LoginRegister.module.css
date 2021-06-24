@@ -1,0 +1,30 @@
+.container{
+    display: flex;
+    justify-content: center;
+}
+.loginRegisterContainer{
+    margin-top: 40px;
+    width: 800px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.panelContainer{
+    display: flex;
+    width: 305px;
+    height: 480px;
+    flex-direction: column;
+}
+.title{
+    text-align: center;
+}
+.border{
+    height: 460px;
+}
+.button{
+    background: black;
+}
+.button:hover, .button:focus{
+    background: rgb(39, 38, 38);
+}
