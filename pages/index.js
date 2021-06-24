@@ -31,8 +31,8 @@ function Child(props) {
   const cols = []
   for (let i = 0; i < props.products.length; i++) {
     cols.push(
-      <Link href={"/product/" + i.toString()}>
-        <Col key={i.toString()} span={6}>
+      <Link  key={i} href={"/product/" + props.products[i].productId}>
+        <Col key={i} span={6}>
           <Card className={styles.productCard}
             hoverable
             cover={<Image
@@ -51,14 +51,15 @@ function Child(props) {
     <>
       <Layout>
         <BHeader></BHeader>
-        <Content className={styles.mainContainer}>
-          <Layout className={styles.selection}>condition</Layout>
-          <Layout className={styles.main}>
-            <Row gutter={[24, 24]} className={styles.rowCard} align="middle" justify="center">
-              {cols}
-            </Row>
-          </Layout>
-
+        <Content style={{'display': 'flex','justifyContent': 'center'}}>
+          <div  className={styles.mainContainer}>
+            <Layout className={styles.selection}>condition</Layout>
+            <Layout className={styles.main}>
+              <Row gutter={[24, 24]} className={styles.rowCard} align="middle" justify="center">
+                {cols}
+              </Row>
+            </Layout>
+          </div>
         </Content>
         <Footer>Footer</Footer>
       </Layout>
@@ -70,7 +71,7 @@ export async function getServerSideProps(context) {
   const res = await getProduct();
   return {
     props: {
-      products: res.data,
+      "products": res.data,
       // props for your component
     }
   }

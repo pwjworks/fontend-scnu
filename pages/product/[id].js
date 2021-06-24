@@ -11,7 +11,7 @@ const { Title, Text } = Typography;
 
 const getAllProductsId = async function () {
   const res = await getProductsId();
-  return res.data.ids.map(productId => {
+  return res.data.map(productId => {
     return {
       params: {
         id: productId.toString()
@@ -40,14 +40,15 @@ function Child({ postData }) {
   return (
     <>
       <BHeader></BHeader>
-      <Layout className={styles.mainContainer}>
+      <Layout >
+      <div className={styles.mainContainer}>
         <div className={styles.previewWrap}>
           <Image
             width={450}
             height={450}
             alt="example" src="/3090.jpg" />
         </div>
-        <div>
+
           <div className={styles.infoWrap}>
             <Title level={4}>
               {postData.productName}
@@ -77,7 +78,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const postData = await getProductDetails(params.id)
+  const postData = await getProductDetails(params.id);
   return {
     props: {
       "postData": postData.data

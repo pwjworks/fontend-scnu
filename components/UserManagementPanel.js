@@ -115,7 +115,7 @@ export default function UserManagementPanel() {
     {
       title: 'Id',
       dataIndex: 'customerId',
-      width: '10%',
+      width: '15%',
       key: 'customerId',
       editable: true,
     },
@@ -308,7 +308,7 @@ export default function UserManagementPanel() {
           rowClassName="editable-row"
           rowKey={data => data.customerId}
           rowSelection={rowSelection}
-          pagination={{ pageSize: 10 }}
+          pagination={{ pageSize: 20 }}
         />
       </Form>
     </div >

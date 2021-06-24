@@ -1,9 +1,9 @@
 import { Table, Button, Modal, Input, Space, Form, notification, InputNumber, Popconfirm, Typography } from 'antd';
 import { UserOutlined, CommentOutlined, MailOutlined, SmileOutlined } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
-import delCustomers from '../pages/api/dashboard/del-customers';
+import delProducts from '../pages/api/dashboard/del-products';
 import getProducts from '../pages/api/dashboard/get-products';
-import addCustomer from '../pages/api/dashboard/add-customer';
+import addProduct from '../pages/api/dashboard/add-product';
 import updateCustomer from '../pages/api/dashboard/update-customer';
 
 export default function UserManagementPanel() {
@@ -19,10 +19,10 @@ export default function UserManagementPanel() {
   useEffect(() => {
     getProducts().then(res => {
       setProducts(res.data);
-      console.log(res.data)
     })
   }, []);
   useEffect(() => {
+    console.log(products);
     console.log(selected);
   }, [selected]);
 
@@ -43,14 +43,14 @@ export default function UserManagementPanel() {
   }, [selected])
   const handleDelete = function () {
     if (selected.length !== 0) {
-      delCustomers({ ids: selected }).then((res) => {
+      delProducts({ ids: selected }).then((res) => {
         notification.open({
           message: '删除成功',
           description:
             '已经删除' + res.data.ret + '条数据',
           icon: <SmileOutlined style={{ color: '#108ee9' }} />,
         });
-        setCustomers(res.data.customers);
+        setProducts(res.data.productInfos);
         setSelected([]);
       })
     }
@@ -61,7 +61,7 @@ export default function UserManagementPanel() {
   };
   const handleCancel = () => {
     getProducts().then(res => {
-      setCustomers(res.data);
+      getProducts(res.data);
     })
     setVisible(false);
   };
@@ -81,7 +81,7 @@ export default function UserManagementPanel() {
     if (values !== null) {
       setLoading(true);
       console.log(values);
-      addCustomer(values).then((res) => {
+      addProduct(values).then((res) => {
         notification.open({
           message: '添加成功',
           description:
@@ -243,7 +243,7 @@ export default function UserManagementPanel() {
           Delete
         </Button>
         <Modal
-          title="Add user"
+          title="Add Product"
           visible={visible}
           onCancel={handleCancel}
           footer={null}
@@ -256,37 +256,44 @@ export default function UserManagementPanel() {
               onFinishFailed={onFinishFailed}
             >
               <Form.Item
-                label="Tel"
-                name="customerTel"
-                rules={[{ required: true, message: 'Please input your Tel!' }]}
+                label="ProductName"
+                name="productName"
+                rules={[{ required: true, message: 'Please input your productName!' }]}
               >
                 <Input prefix={<UserOutlined />} style={{ width: 300 }} />
               </Form.Item>
               <Form.Item
-                label="Mail"
-                name="customerMail"
-                rules={[{ required: true, message: 'Please input your Mail!' }]}
+                label="ProductNum"
+                name="productNum"
+                rules={[{ required: true, message: 'Please input your productNum!' }]}
               >
                 <Input prefix={<CommentOutlined />} style={{ width: 300 }} />
               </Form.Item>
               <Form.Item
-                label="Male"
-                name="customerMale"
-                rules={[{ required: true, message: 'Please input your Male!' }]}
+                label="Price"
+                name="price"
+                rules={[{ required: true, message: 'Please input your Price!' }]}
               >
                 <Input prefix={<MailOutlined />} style={{ width: 300 }} />
               </Form.Item>
               <Form.Item
-                label="Address"
-                name="customerAddress"
-                rules={[{ required: true, message: 'Please input your Address!' }]}
+                label="Desc"
+                name="productCore"
+                rules={[{ required: true, message: 'Please input your Desc!' }]}
               >
                 <Input prefix={<MailOutlined />} style={{ width: 300 }} />
               </Form.Item>
               <Form.Item
-                label="Birth"
-                name="customerBirth"
-                rules={[{ required: true, message: 'Please input your Birth!' }]}
+                label="CategoryId"
+                name="categoryId"
+                rules={[{ required: true, message: 'Please input your CategoryId!' }]}
+              >
+                <Input prefix={<MailOutlined />} style={{ width: 300 }} />
+              </Form.Item>
+              <Form.Item
+                label="BrandId"
+                name="brandId"
+                rules={[{ required: true, message: 'Please input your BrandId!' }]}
               >
                 <Input prefix={<MailOutlined />} style={{ width: 300 }} />
               </Form.Item>
@@ -313,9 +320,9 @@ export default function UserManagementPanel() {
           dataSource={products}
           columns={mergedColumns}
           rowClassName="editable-row"
-          rowKey={data => data.customerId}
+          rowKey={data => data.productId}
           rowSelection={rowSelection}
-          pagination={{ pageSize: 10 }}
+          pagination={{ pageSize: 20 }}
         />
       </Form>
     </div >

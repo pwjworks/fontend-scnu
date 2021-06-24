@@ -1,17 +1,20 @@
-
-.mainContainer{
+.mainContainer {
+    width: 1480px;
     display: flex;
 }
-.main{
+
+.main {
     padding: 1rem;
 }
-.selection{
+
+.selection {
     margin-top: 1rem;
     margin-left: 0.5rem;
     background: white;
     width: 700px;
 }
-.productCard{
+
+.productCard {
     border-radius: 5px;
     width: 280px;
 }
