@@ -12,6 +12,7 @@
 
 .infoWrap {
     background-color: white;
+    border-radius: 20px;
     width: 800px;
     height: 300px;
     display: flex;

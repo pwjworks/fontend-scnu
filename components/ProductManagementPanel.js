@@ -1,18 +1,26 @@
-import { Table, Button, Modal, Input, Space, Form, notification, InputNumber, Popconfirm, Typography } from 'antd';
-import { UserOutlined, CommentOutlined, MailOutlined, SmileOutlined } from '@ant-design/icons';
+import { Table, Button, Modal, Input, Space, Form, notification, InputNumber, Popconfirm, Typography,Upload,message } from 'antd';
+import { UserOutlined, CommentOutlined, MailOutlined, SmileOutlined,InboxOutlined  } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
 import delProducts from '../pages/api/dashboard/del-products';
 import getProducts from '../pages/api/dashboard/get-products';
 import addProduct from '../pages/api/dashboard/add-product';
 import updateCustomer from '../pages/api/dashboard/update-customer';
 
+
+const { Dragger } = Upload;
+
+
+
+
 export default function UserManagementPanel() {
 
   const [products, setProducts] = useState([]);    // 用户数据
   const [selected, setSelected] = useState([]);    // 已选数据
-  const [disabled, setDisabled] = useState(true);    // 对话框可见性
-  const [visible, setVisible] = useState(false);    // 对话框可见性
-  const [loading, setLoading] = useState(false);    // 对话框可见性
+  const [disabled, setDisabled] = useState(true);  // 对话框可见性
+  const [upDisabled, setUpDisabled] = useState(true);  // 对话框可见性
+  const [upload, setUpload] = useState(false);   // 对话框可见性
+  const [visible, setVisible] = useState(false);   // 对话框可见性
+  const [loading, setLoading] = useState(false);   // 对话框可见性
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState('');
   // 页面加载时请求数据
@@ -26,6 +34,36 @@ export default function UserManagementPanel() {
     console.log(selected);
   }, [selected]);
 
+
+  // 上传事件
+  const showUpload = () => {
+    setUpload(true);
+  };
+  const cancelUpload = () => {
+    setUpload(false);
+  }
+  const props = {
+    name: 'file',
+    accept:".jpg",
+    action: 'http://localhost:8080/picUpload',
+    data:{
+      id:selected[0]
+    },
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log('Dropped files', e.dataTransfer.files);
+    },
+  };
   // 选择事件
   const rowSelection = {
     onChange: (selectedRowKeys) => {
@@ -35,9 +73,15 @@ export default function UserManagementPanel() {
   };
   // 删除事件
   useEffect(() => {
+    if(selected.length===1){
+      setUpDisabled(false);
+    }else{
+      setUpDisabled(true);
+    }
     if (selected.length > 0) {
       setDisabled(false);
     } else {
+      setUpDisabled(true);
       setDisabled(true);
     }
   }, [selected])
@@ -241,6 +285,9 @@ export default function UserManagementPanel() {
         </Button>
         <Button type="primary" onClick={(e) => handleDelete()} disabled={disabled} danger style={{ marginLeft: 16 }} >
           Delete
+        </Button>     
+        <Button type="primary" onClick={showUpload} disabled={upDisabled} style={{ marginLeft: 16 }} >
+          Upload
         </Button>
         <Modal
           title="Add Product"
@@ -304,6 +351,24 @@ export default function UserManagementPanel() {
               </Form.Item>
             </Form>
           </Space>
+        </Modal>
+        <Modal
+          title="upload pic"
+          visible={upload}
+          onCancel={cancelUpload}
+          footer={null}
+
+        >
+          <Dragger {...props} >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            <p className="ant-upload-hint">
+              Support for a single or bulk upload. Strictly prohibit from uploading company data or other
+              band files
+            </p>
+          </Dragger>
         </Modal>
         <span style={{ marginLeft: 8 }}>
 
