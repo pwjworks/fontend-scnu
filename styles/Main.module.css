@@ -3,7 +3,7 @@
     display: flex;
 }
 
-.main {
+.productList {
     padding: 1rem;
 }
 
@@ -11,7 +11,7 @@
     margin-top: 1rem;
     margin-left: 0.5rem;
     background: white;
-    width: 700px;
+    width: 300px;
 }
 
 .productCard {

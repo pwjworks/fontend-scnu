@@ -46,15 +46,17 @@ function Child({ postData }) {
           <Image
             width={450}
             height={450}
-            alt="example" src="/3090.jpg" />
+            alt="example" src={"https://ssm-scnu-1301304324.cos.ap-guangzhou.myqcloud.com/pic/"+postData.productId+".jpg"} />
         </div>
 
           <div className={styles.infoWrap}>
             <Title level={4}>
               {postData.productName}
             </Title>
+            <p>{postData.productCore}</p>
             <div className={styles.priceInfo}>
-              <Text className={styles.info} strong>限时打折：   </Text>
+
+              <Text className={styles.info} strong>限时打折:</Text>
               <Text type="danger" className={styles.realPrice} strong>{postData.price}</Text>
               <Text className={styles.deletedPrice} delete>13999</Text>
             </div>

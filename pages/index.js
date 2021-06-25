@@ -1,7 +1,6 @@
-import { Layout, Empty, Card, Row, Col } from 'antd';
+import { Layout, Empty, Card, Row, Col,Image } from 'antd';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
-import Image from 'next/image';
 import styles from '../styles/Main.module.css';
 import BHeader from '../components/BHeader';
 
@@ -38,9 +37,10 @@ function Child(props) {
             cover={<Image
               width={280}
               height={280}
-              alt="example" src="/3090.jpg" />}
+              preview={false}
+              alt="example" src={"https://ssm-scnu-1301304324.cos.ap-guangzhou.myqcloud.com/pic/"+ props.products[i].productId+".jpg"} />}
           >
-            <Meta title={props.products[i].productName} description="www.instagram.com" />
+            <Meta title={props.products[i].productName} description={props.products[i].productCore} />
           </Card>
         </Col>
       </Link>
@@ -53,9 +53,9 @@ function Child(props) {
         <BHeader></BHeader>
         <Content style={{'display': 'flex','justifyContent': 'center'}}>
           <div  className={styles.mainContainer}>
-            <Layout className={styles.selection}>condition</Layout>
-            <Layout className={styles.main}>
-              <Row gutter={[24, 24]} className={styles.rowCard} align="middle" justify="center">
+            <div className={styles.selection}>condition</div>
+            <Layout className={styles.productList}>
+              <Row gutter={[24, 24]} className={styles.rowCard} align="middle">
                 {cols}
               </Row>
             </Layout>
