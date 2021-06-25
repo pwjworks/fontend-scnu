@@ -1,4 +1,4 @@
-import { Layout, Empty, Card, Image, Typography, Button } from "antd";
+import { Layout, Empty, Card, Image, Typography, Button,Space } from "antd";
 import React, { useState, useEffect } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import styles from "../../styles/[id].module.css";
@@ -58,9 +58,15 @@ function Child({ postData }) {
 
               <Text className={styles.info} strong>限时打折:</Text>
               <Text type="danger" className={styles.realPrice} strong>{postData.price}</Text>
-              <Text className={styles.deletedPrice} delete>13999</Text>
+              <Text className={styles.deletedPrice} delete>{postData.price*10}</Text>
             </div>
-            <Button type="primary" icon={<DownloadOutlined />} size="large">加入购物车</Button>
+            <p className={styles.deliverInfo}>由 京东 发货, 华硕京东自营旗舰店提供售后服务. 有货（外地跨区调货）,暂免调货服务费. 18:00前下单，预计06月27日(周日)送达，受道路资源影响，您的订单可能会有所延迟，我们将尽快为您送达，请您耐心等待！</p>
+            <div className={styles.btn}>
+              <Button className={styles.buybtn} type="primary" icon={<DownloadOutlined />} size="large">立即购买</Button>
+              <Button className={styles.addbtn} type="primary" icon={<DownloadOutlined />} size="large">加入购物车</Button>
+            </div>
+
+
 
           </div>
         </div>

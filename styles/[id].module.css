@@ -14,7 +14,6 @@
     background-color: white;
     border-radius: 20px;
     width: 800px;
-    height: 300px;
     display: flex;
     padding: 30px;
     flex-direction: column;
@@ -37,4 +36,26 @@
 
 .deletedPrice {
     font-size: large;
+}
+
+.deliverInfo {
+    margin: 20px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.buybtn {
+    margin-top: 30px;
+    width: 400px;
+}
+
+.addbtn {
+    margin-top: 20px;
+    background: black;
+    width: 400px;
 }
