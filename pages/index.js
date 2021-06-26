@@ -1,4 +1,4 @@
-import { Layout, Empty, Card, Row, Col,Image } from 'antd';
+import { Layout, Empty, Card, Row, Col,Image,Typography  } from 'antd';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import styles from '../styles/Main.module.css';
@@ -7,6 +7,7 @@ import BHeader from '../components/BHeader';
 import getProduct from "./api/main/get-products";
 import getPopular from "./api/main/get-popular";
 
+const { Title } = Typography;
 const { Meta } = Card;
 const { Footer, Content } = Layout;
 
@@ -80,6 +81,7 @@ function Child(props) {
         <Content style={{'display': 'flex','justifyContent': 'center'}}>
           <div  className={styles.mainContainer}>
             <div className={styles.selection}>
+              <Title level={4} className={styles.title}>热门排行</Title>
             <Row gutter={[24, 24]} className={styles.rowCard} align="middle" justify="center">
               {popular}
               </Row>

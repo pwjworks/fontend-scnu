@@ -4,19 +4,27 @@
 }
 
 .productList {
-    width: 280px;
     padding: 1rem;
+}
+
+.productCard {
+    width: 280px;
 }
 
 .selection {
     display: flex;
-    justify-self: center;
+    justify-content: center;
+    flex-direction: column;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 15px;
     margin-top: 1rem;
     margin-left: 0.5rem;
     background: white;
     width: 280px;
+}
+
+.title {
+    text-align: center;
 }
 
 .popularCard {
