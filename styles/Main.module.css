@@ -4,17 +4,21 @@
 }
 
 .productList {
+    width: 280px;
     padding: 1rem;
 }
 
 .selection {
+    display: flex;
+    justify-self: center;
+    padding: 20px;
+    border-radius: 20px;
     margin-top: 1rem;
     margin-left: 0.5rem;
     background: white;
-    width: 300px;
+    width: 280px;
 }
 
-.productCard {
-    border-radius: 5px;
-    width: 280px;
+.popularCard {
+    width: 200px;
 }

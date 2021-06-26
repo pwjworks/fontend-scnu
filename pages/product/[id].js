@@ -8,6 +8,7 @@ import getProductDetails from "../api/product/get-product-details";
 
 
 const { Title, Text } = Typography;
+const { Footer } = Layout;
 
 const getAllProductsId = async function () {
   const res = await getProductsId();
@@ -65,13 +66,10 @@ function Child({ postData }) {
               <Button className={styles.buybtn} type="primary" icon={<DownloadOutlined />} size="large">立即购买</Button>
               <Button className={styles.addbtn} type="primary" icon={<DownloadOutlined />} size="large">加入购物车</Button>
             </div>
-
-
-
           </div>
         </div>
       </Layout>
-
+      <Footer>Footer</Footer>
     </>
   )
 }
