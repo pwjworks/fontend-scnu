@@ -1,7 +1,8 @@
-import { Menu, Layout, Input,Select } from 'antd';
-import { UserOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import React, { useState, useEffect } from 'react';
+import { Menu, Layout, Select, Button } from 'antd';
+import { UserOutlined, ShoppingCartOutlined,SearchOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
 import searcher from '../pages/api/search/searcher';
+import Link from 'next/link'
 
 const { Option } = Select;
 const { Header } = Layout;
@@ -9,7 +10,8 @@ import styles from '../styles/BHeader.module.css';
 
 
 export default function BHeader() {
-  const [keywords,setKeywords] =useState('');
+  const [id,setId] =useState(null);
+  const [disabled,setDisabled] = useState(true);
   const [data,setData] = useState([]);
   const options = data.map(d => 
       <Option key={d.productId}>{d.productName}</Option>
@@ -17,7 +19,8 @@ export default function BHeader() {
   let timeout;
   let currentValue;
   const handleChange=(value)=>{
-      setKeywords(value);
+      setDisabled(false);
+      setId(value);
   }
   const handleSearch=(value)=>{
     if (timeout) {
@@ -34,7 +37,7 @@ export default function BHeader() {
         setData([]);
       }
     }
-    timeout = setTimeout(fetch, 1000);
+    timeout = setTimeout(fetch, 300);
   }
   return (
     <>
@@ -54,7 +57,7 @@ export default function BHeader() {
             className={styles.search}
             showSearch
             placeholder="Search..."
-            value={keywords}
+            value={id}
             defaultActiveFirstOption={false}
             showArrow={false}
             filterOption={false}
@@ -63,7 +66,12 @@ export default function BHeader() {
             notFoundContent={null}
           >
             {options}
+            
           </Select>
+          <Link  key="id" href={"/product/"+id}>
+            <Button shape="circle" icon={<SearchOutlined />} disabled={disabled}>
+            </Button>
+          </Link>
         </div>
       </Header>
     </>
