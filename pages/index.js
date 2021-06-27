@@ -42,7 +42,7 @@ function Child(props) {
               width={280}
               height={280}
               preview={false}
-              alt="example" src={"https://ssm-scnu-1301304324.cos.ap-guangzhou.myqcloud.com/pic/"+ props.products[i].productId+".jpg"} />}
+              alt="example" src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/"+ props.products[i].productId+".jpg"} />}
           >
             <Meta title={props.products[i].productName} description={props.products[i].productCore} />
           </Card>
@@ -63,7 +63,7 @@ function Child(props) {
                   width={200}
                   height={200}
                   preview={false}
-                  alt="example" src={"https://ssm-scnu-1301304324.cos.ap-guangzhou.myqcloud.com/pic/"+ props.products[j].productId+".jpg"} />}
+                  alt="example" src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/"+ props.products[j].productId+".jpg"} />}
               >
                 <Meta title={props.products[j].productName} />
               </Card>

@@ -1,14 +1,41 @@
-import { Menu, Layout, Input } from 'antd';
+import { Menu, Layout, Input,Select } from 'antd';
 import { UserOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import searcher from '../pages/api/search/searcher';
 
-const { Search } = Input;
+const { Option } = Select;
 const { Header } = Layout;
 import styles from '../styles/BHeader.module.css';
 
 
-
 export default function BHeader() {
+  const [keywords,setKeywords] =useState('');
+  const [data,setData] = useState([]);
+  const options = data.map(d => 
+      <Option key={d.productId}>{d.productName}</Option>
+  );
+  let timeout;
+  let currentValue;
+  const handleChange=(value)=>{
+      setKeywords(value);
+  }
+  const handleSearch=(value)=>{
+    if (timeout) {
+      clearTimeout(timeout);
+      timeout = null;
+    }
+    currentValue = value;
+    function fetch(){
+      if(currentValue){
+        searcher(currentValue).then(res=>{
+          setData(res.data);
+        });
+      }else {
+        setData([]);
+      }
+    }
+    timeout = setTimeout(fetch, 1000);
+  }
   return (
     <>
       <Header className={styles.mainHeader}>
@@ -23,7 +50,20 @@ export default function BHeader() {
         <div className={styles.subHeaderRight}>
           <UserOutlined style={{ fontSize: '16px' }} />
           <ShoppingCartOutlined style={{ fontSize: '16px' }} />
-          <Search className={styles.search} placeholder="input search text" style={{ width: 200 }} />
+          <Select
+            className={styles.search}
+            showSearch
+            placeholder="Search..."
+            value={keywords}
+            defaultActiveFirstOption={false}
+            showArrow={false}
+            filterOption={false}
+            onSearch={handleSearch}
+            onChange={handleChange}
+            notFoundContent={null}
+          >
+            {options}
+          </Select>
         </div>
       </Header>
     </>

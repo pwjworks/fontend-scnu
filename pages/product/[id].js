@@ -47,7 +47,7 @@ function Child({ postData }) {
           <Image
             width={450}
             height={450}
-            alt="example" src={"https://ssm-scnu-1301304324.cos.ap-guangzhou.myqcloud.com/pic/"+postData.productId+".jpg"} />
+            alt="example" src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/"+postData.productId+".jpg"} />
         </div>
 
           <div className={styles.infoWrap}>
