@@ -5,6 +5,7 @@ import delCustomers from '../pages/api/dashboard/del-customers';
 import getCustomers from '../pages/api/dashboard/get-customers';
 import addCustomer from '../pages/api/dashboard/add-customer';
 import updateCustomer from '../pages/api/dashboard/update-customer';
+import { notifyOK, notifyFail } from '../pages/utils/notify'
 
 export default function UserManagementPanel() {
 
@@ -19,8 +20,8 @@ export default function UserManagementPanel() {
   useEffect(() => {
     getCustomers().then(res => {
       console.log(res);
-      if (res.data.errorCode === 200) {
-        setCustomers(res.data);
+      if (res.data.success){
+        setCustomers(res.data.data);
       }
     })
   }, []);
@@ -46,14 +47,13 @@ export default function UserManagementPanel() {
   const handleDelete = function () {
     if (selected.length !== 0) {
       delCustomers({ ids: selected }).then((res) => {
-        notification.open({
-          message: '删除成功',
-          description:
-            '已经删除' + res.data.ret + '条数据',
-          icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-        });
-        setCustomers(res.data.customers);
-        setSelected([]);
+        if(res.data.success){
+          notifyOK('删除成功');
+          setCustomers(res.data.data);
+          setSelected([]);
+        }else {
+          notifyFail(res.data.msg);
+        }
       })
     }
   }
@@ -84,12 +84,12 @@ export default function UserManagementPanel() {
       setLoading(true);
       console.log(values);
       addCustomer(values).then((res) => {
-        notification.open({
-          message: '添加成功',
-          description:
-            '已经插入' + res.data.ret + '条数据',
-          icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-        });
+        console.log(res);
+        if(res.data.success) {
+          notifyOK('已经插入' + res.data.data + '条数据');
+        }else{
+          notifyFail(res.data.msg);
+        }
       });
       setLoading(false);
     };
@@ -210,15 +210,12 @@ export default function UserManagementPanel() {
     try {
       const row = await form.validateFields();
       updateCustomer(row).then((res) => {
-        notification.open({
-          message: '更改成功',
-          description:
-            '已经更改' + res.data.ret + '条数据',
-          icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+        if(res.data.success) {
+          notifyOK("已经更新数据");
+        }else {
+          notifyFail(res.data.msg);
         }
-        );
-        console.log(res.data);
-        setCustomers(res.data.customers);
+        setCustomers(res.data.data);
       });
       setEditingKey('');
     } catch (errInfo) {

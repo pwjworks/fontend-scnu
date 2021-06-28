@@ -31,7 +31,9 @@ export default function BHeader() {
     function fetch() {
       if (currentValue) {
         searcher(currentValue).then(res => {
-          setData(res.data);
+          if(res.data.success) {
+            setData(res.data.data);
+          }
         });
       } else {
         setData([]);

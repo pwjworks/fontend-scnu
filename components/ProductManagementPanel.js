@@ -26,6 +26,7 @@ export default function UserManagementPanel() {
   // 页面加载时请求数据
   useEffect(() => {
     getProducts().then(res => {
+      console.log(res);
       setProducts(res.data);
     })
   }, []);
@@ -46,6 +47,9 @@ export default function UserManagementPanel() {
     name: 'file',
     accept: ".jpg",
     action: 'http://localhost:8080/picUpload',
+    headers: {
+      'Authorization':localStorage.getItem('Authorization'),
+    },
     data: {
       id: selected[0]
     },

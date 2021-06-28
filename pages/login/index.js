@@ -31,6 +31,10 @@ function Child() {
   const onLoginFinish = function (values) {
     console.log(values)
     login(values).then(res => {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("Authorization",res.headers.authorization);
+        console.log("item"+localStorage.getItem("Authorization"));
+      }
       console.log(res);
       if (res.data.errorCode === 200) {
         router.push('/');
@@ -39,20 +43,6 @@ function Child() {
       }
     })
   }
-  // const notifyOK = function (msg) {
-  //   notification.open({
-  //     message: "成功",
-  //     description: msg,
-  //     icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-  //   });
-  // }
-  // const notifyFail = function (msg) {
-  //   notification.open({
-  //     message: "失败",
-  //     description: msg,
-  //     icon: <ExclamationCircleOutlined style={{ color: '#108ee9' }} />,
-  //   });
-  // }
   const onRegisterFinish = function (values) {
     if (values.password === values.confirmpassword) {
       let data = {};
@@ -61,27 +51,10 @@ function Child() {
       data.customerPassword = values.password;
       console.log(data);
       register(data).then(res => {
-        switch (res.data) {
-          case 0:
-            notifyOK("注册成功，请查看你的邮箱进行激活！");
-            break;
-          case 1:
-            notifyFail("用户名异常");
-            break;
-          case 2:
-            notifyFail("密码异常");
-            break;
-          case 3:
-            notifyFail("邮箱异常");
-            break;
-          case 4:
-            notifyFail("注册失败");
-            break;
-          case 5:
-            notifyFail("邮箱重复");
-            break;
-          default:
-            notifyFail("未知错误");
+        if(res.data.success){
+          notifyOK("注册成功，请到邮箱激活！");
+        }else{
+          notifyFail(res.data.msg);
         }
       })
     }

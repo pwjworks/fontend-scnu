@@ -51,10 +51,6 @@ function Child() {
                   <Menu.Item key="2"><Link to="/dashboard/products">商品信息</Link></Menu.Item>
 
                 </SubMenu>
-                <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
-                  <Menu.Item key="9">option9</Menu.Item>
-
-                </SubMenu>
               </Menu>
             </Sider>
             <Layout style={{ padding: '0 24px 24px' }}>
