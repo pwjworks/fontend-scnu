@@ -1,4 +1,4 @@
-import { Layout, Empty, Card, Row, Col,Image,Typography  } from 'antd';
+import { Layout, Empty, Card, Row, Col, Image, Typography } from 'antd';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import styles from '../styles/Main.module.css';
@@ -23,26 +23,25 @@ export default function Parent(props) {
     return (<Empty description="loading..." />);
   }
 
-  return <Child products={props.products} popular={props.popular}/>;
+  return <Child products={props.products} popular={props.popular} />;
 }
 
 
 function Child(props) {
   console.log(props);
   const cols = [];
-  const popular=[];
-  let j=0;
+  const popular = [];
   for (let i = 0; i < props.products.length; i++) {
     cols.push(
-      <Link  key={i} href={"/product/" + props.products[i].productId}>
-        <Col key={i} span={6}>
+      <Link key={i} href={"/product/" + props.products[i].productId}>
+        <Col key={i} >
           <Card className={styles.productCard}
             hoverable
             cover={<Image
               width={280}
               height={280}
               preview={false}
-              alt="example" src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/"+ props.products[i].productId+".jpg"} />}
+              alt="example" src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/" + props.products[i].productId + ".jpg"} />}
           >
             <Meta title={props.products[i].productName} description={props.products[i].productCore} />
           </Card>
@@ -51,11 +50,11 @@ function Child(props) {
 
     )
   }
-  for(let i = 0; i <props.popular.length;i++){
-    for(let j = 0; j < props.products.length;j++){
-      if(props.popular[i]===props.products[j].productId){
+  for (let i = 0; i < props.popular.length; i++) {
+    for (let j = 0; j < props.products.length; j++) {
+      if (props.popular[i] === props.products[j].productId) {
         popular.push(
-          <Link  key={i} href={"/product/" + props.products[j].productId}>
+          <Link key={i} href={"/product/" + props.products[j].productId}>
             <Col key={i} >
               <Card className={styles.popularCard}
                 hoverable
@@ -63,7 +62,7 @@ function Child(props) {
                   width={200}
                   height={200}
                   preview={false}
-                  alt="example" src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/"+ props.products[j].productId+".jpg"} />}
+                  alt="example" src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/" + props.products[j].productId + ".jpg"} />}
               >
                 <Meta title={props.products[j].productName} />
               </Card>
@@ -78,19 +77,19 @@ function Child(props) {
     <>
       <Layout>
         <BHeader></BHeader>
-        <Content style={{'display': 'flex','justifyContent': 'center'}}>
-          <div  className={styles.mainContainer}>
+        <Content style={{ 'display': 'flex', 'justifyContent': 'center' }}>
+          <div className={styles.mainContainer}>
             <div className={styles.selection}>
               <Title level={4} className={styles.title}>热门排行</Title>
-            <Row gutter={[24, 24]} className={styles.rowCard} align="middle" justify="center">
-              {popular}
+              <Row gutter={[24, 24]} className={styles.rowCard} align="middle" justify="center">
+                {popular}
               </Row>
             </div>
-            <Layout className={styles.productList}>
+            <div className={styles.productList}>
               <Row gutter={[24, 24]} className={styles.rowCard} align="middle">
                 {cols}
               </Row>
-            </Layout>
+            </div>
           </div>
         </Content>
         <Footer>Footer</Footer>
@@ -101,11 +100,11 @@ function Child(props) {
 
 export async function getServerSideProps(context) {
   const res = await getProduct();
-  const popular=await getPopular();
+  const popular = await getPopular();
   return {
     props: {
       "products": res.data,
-      "popular":popular.data
+      "popular": popular.data
       // props for your component
     }
   }

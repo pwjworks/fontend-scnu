@@ -1,12 +1,14 @@
 .mainContainer {
     width: 1480px;
     display: flex;
+    justify-content: center;
+    flex-direction: row;
 }
 
 .productList {
+    width: 1000px;
     padding: 1rem;
 }
-
 .productCard {
     width: 280px;
 }
