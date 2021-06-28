@@ -51,8 +51,9 @@ export default function BHeader() {
           <Menu.Item key="3">电脑</Menu.Item>
         </Menu>
         <div className={styles.subHeaderRight}>
-          <UserOutlined style={{ fontSize: '16px' }} />
-          <ShoppingCartOutlined style={{ fontSize: '16px' }} />
+          <Link key="user" href="/login"><UserOutlined style={{ fontSize: '20px' }} /></Link>
+
+          <ShoppingCartOutlined style={{ fontSize: '20px' }} />
           <Select
             className={styles.search}
             showSearch
