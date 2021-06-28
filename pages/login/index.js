@@ -28,7 +28,9 @@ function Child() {
 
   const router = useRouter()
   const onLoginFinish = function (values) {
+    console.log(values)
     login(values).then(res=>{
+      console.log(res);
       if(res.data.code===0){
         router.push('/');
       }else {
@@ -94,7 +96,7 @@ function Child() {
               <Space direction="vertical">
                 <Title level={4} className={styles.title}>登录</Title>
                 <Form layout="vertical" onFinish={onLoginFinish}>
-                  <Form.Item name="customerEmail" label="Email"
+                  <Form.Item name="username" label="Email"
                       rules={[
                         {
                           required: true,
@@ -104,7 +106,7 @@ function Child() {
                   >
                     <Input size="large" placeholder="Email" id="loginEmail" />
                   </Form.Item>
-                  <Form.Item name="customerPassword" label="Password"
+                  <Form.Item name="password" label="Password"
                     rules={[
                       {
                         required: true,
