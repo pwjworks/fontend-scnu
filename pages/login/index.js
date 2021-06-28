@@ -33,10 +33,8 @@ function Child() {
     login(values).then(res => {
       if (typeof window !== 'undefined') {
         localStorage.setItem("Authorization",res.headers.authorization);
-        console.log("item"+localStorage.getItem("Authorization"));
       }
-      console.log(res);
-      if (res.data.errorCode === 200) {
+      if (res.data.code === 200) {
         router.push('/');
       } else {
         notifyFail(res.data.errorMsg);
