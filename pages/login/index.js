@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Empty, Divider, Typography, Input, Space, Form, Button,notification  } from 'antd';
-import { ExclamationCircleOutlined,SmileOutlined } from '@ant-design/icons';
+import { Layout, Empty, Divider, Typography, Input, Space, Form, Button, notification } from 'antd';
 import BHeader from '../../components/BHeader';
 import styles from '../../styles/LoginRegister.module.css';
 import register from '../api/login/register';
 import login from '../api/login/login';
 import { useRouter } from 'next/router'
+import { notifyOK, notifyFail } from '../utils/notify'
+
 const { Footer, Content } = Layout;
 const { Title } = Typography;
 
@@ -29,38 +30,38 @@ function Child() {
   const router = useRouter()
   const onLoginFinish = function (values) {
     console.log(values)
-    login(values).then(res=>{
+    login(values).then(res => {
       console.log(res);
-      if(res.data.code===0){
+      if (res.data.errorCode === 200) {
         router.push('/');
-      }else {
-        notifyFail(res.data.message);
+      } else {
+        notifyFail(res.data.errorMsg);
       }
     })
   }
-  const notifyOK = function(msg){
-    notification.open({
-      message: "成功",
-      description:msg,
-      icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-    });
-  }
-  const notifyFail = function(msg){
-    notification.open({
-      message: "失败",
-      description:msg,
-      icon: <ExclamationCircleOutlined style={{ color: '#108ee9' }} />,
-    });
-  }
-  const onRegisterFinish= function (values) {
-    if(values.password===values.confirmpassword){
-      let data={};
-      data.customerEmail=values.email;
-      data.customerName=values.name;
-      data.customerPassword=values.password;
+  // const notifyOK = function (msg) {
+  //   notification.open({
+  //     message: "成功",
+  //     description: msg,
+  //     icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+  //   });
+  // }
+  // const notifyFail = function (msg) {
+  //   notification.open({
+  //     message: "失败",
+  //     description: msg,
+  //     icon: <ExclamationCircleOutlined style={{ color: '#108ee9' }} />,
+  //   });
+  // }
+  const onRegisterFinish = function (values) {
+    if (values.password === values.confirmpassword) {
+      let data = {};
+      data.customerEmail = values.email;
+      data.customerName = values.name;
+      data.customerPassword = values.password;
       console.log(data);
-      register(data).then(res=>{
-        switch(res.data){
+      register(data).then(res => {
+        switch (res.data) {
           case 0:
             notifyOK("注册成功，请查看你的邮箱进行激活！");
             break;
@@ -97,12 +98,12 @@ function Child() {
                 <Title level={4} className={styles.title}>登录</Title>
                 <Form layout="vertical" onFinish={onLoginFinish}>
                   <Form.Item name="username" label="Email"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please input your email!',
-                        },
-                      ]}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input your email!',
+                      },
+                    ]}
                   >
                     <Input size="large" placeholder="Email" id="loginEmail" />
                   </Form.Item>
@@ -141,12 +142,12 @@ function Child() {
                     <Input size="large" placeholder="large size" />
                   </Form.Item>
                   <Form.Item name="name" label="Name"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please input your username!',
-                        },
-                      ]}
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input your username!',
+                      },
+                    ]}
                   >
                     <Input size="large" placeholder="large size" />
                   </Form.Item>

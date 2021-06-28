@@ -53,7 +53,7 @@ export default function BHeader() {
         <div className={styles.subHeaderRight}>
           <Link key="user" href="/login"><UserOutlined style={{ fontSize: '20px' }} /></Link>
 
-          <ShoppingCartOutlined style={{ fontSize: '20px' }} />
+          <Link key="user" href="/dashboard"><ShoppingCartOutlined style={{ fontSize: '20px' }} /></Link>
           <Select
             className={styles.search}
             showSearch

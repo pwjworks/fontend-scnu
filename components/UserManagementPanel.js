@@ -18,7 +18,10 @@ export default function UserManagementPanel() {
   // 页面加载时请求数据
   useEffect(() => {
     getCustomers().then(res => {
-      setCustomers(res.data);
+      console.log(res);
+      if (res.data.errorCode === 200) {
+        setCustomers(res.data);
+      }
     })
   }, []);
   useEffect(() => {

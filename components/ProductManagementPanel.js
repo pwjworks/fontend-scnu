@@ -88,6 +88,7 @@ export default function UserManagementPanel() {
   const handleDelete = function () {
     if (selected.length !== 0) {
       delProducts({ ids: selected }).then((res) => {
+        console.log(res);
         notification.open({
           message: '删除成功',
           description:
