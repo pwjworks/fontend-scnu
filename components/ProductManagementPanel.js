@@ -1,10 +1,10 @@
-import { Table, Button, Modal, Input, Space, Form, notification, InputNumber, Popconfirm, Typography,Upload,message } from 'antd';
-import { UserOutlined, CommentOutlined, MailOutlined, SmileOutlined,InboxOutlined  } from '@ant-design/icons';
+import { Table, Button, Modal, Input, Space, Form, notification, InputNumber, Popconfirm, Typography, Upload, message } from 'antd';
+import { UserOutlined, CommentOutlined, MailOutlined, SmileOutlined, InboxOutlined } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
 import delProducts from '../pages/api/dashboard/del-products';
 import getProducts from '../pages/api/dashboard/get-products';
 import addProduct from '../pages/api/dashboard/add-product';
-import updateCustomer from '../pages/api/dashboard/update-customer';
+import updateProduct from '../pages/api/dashboard/update-product';
 
 
 const { Dragger } = Upload;
@@ -44,10 +44,10 @@ export default function UserManagementPanel() {
   }
   const props = {
     name: 'file',
-    accept:".jpg",
+    accept: ".jpg",
     action: 'http://localhost:8080/picUpload',
-    data:{
-      id:selected[0]
+    data: {
+      id: selected[0]
     },
     onChange(info) {
       const { status } = info.file;
@@ -73,9 +73,9 @@ export default function UserManagementPanel() {
   };
   // 删除事件
   useEffect(() => {
-    if(selected.length===1){
+    if (selected.length === 1) {
       setUpDisabled(false);
-    }else{
+    } else {
       setUpDisabled(true);
     }
     if (selected.length > 0) {
@@ -257,7 +257,7 @@ export default function UserManagementPanel() {
   const save = async (key) => {
     try {
       const row = await form.validateFields();
-      updateCustomer(row).then((res) => {
+      updateProduct(row).then((res) => {
         notification.open({
           message: '更改成功',
           description:
@@ -266,7 +266,7 @@ export default function UserManagementPanel() {
         }
         );
         console.log(res.data);
-        setCustomers(res.data.customers);
+        setProducts(res.data.productInfos);
       });
       setEditingKey('');
     } catch (errInfo) {
@@ -285,7 +285,7 @@ export default function UserManagementPanel() {
         </Button>
         <Button type="primary" onClick={(e) => handleDelete()} disabled={disabled} danger style={{ marginLeft: 16 }} >
           Delete
-        </Button>     
+        </Button>
         <Button type="primary" onClick={showUpload} disabled={upDisabled} style={{ marginLeft: 16 }} >
           Upload
         </Button>
