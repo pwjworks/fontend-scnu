@@ -1,5 +1,5 @@
 import { Menu, Layout, Select, Button } from 'antd';
-import { UserOutlined, ShoppingCartOutlined,SearchOutlined } from '@ant-design/icons';
+import { UserOutlined, ShoppingCartOutlined, SearchOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import searcher from '../pages/api/search/searcher';
 import Link from 'next/link'
@@ -10,30 +10,30 @@ import styles from '../styles/BHeader.module.css';
 
 
 export default function BHeader() {
-  const [id,setId] =useState(null);
-  const [disabled,setDisabled] = useState(true);
-  const [data,setData] = useState([]);
-  const options = data.map(d => 
-      <Option key={d.productId}>{d.productName}</Option>
+  const [id, setId] = useState(null);
+  const [disabled, setDisabled] = useState(true);
+  const [data, setData] = useState([]);
+  const options = data.map(d =>
+    <Option key={d.productId}>{d.productName}</Option>
   );
   let timeout;
   let currentValue;
-  const handleChange=(value)=>{
-      setDisabled(false);
-      setId(value);
+  const handleChange = (value) => {
+    setDisabled(false);
+    setId(value);
   }
-  const handleSearch=(value)=>{
+  const handleSearch = (value) => {
     if (timeout) {
       clearTimeout(timeout);
       timeout = null;
     }
     currentValue = value;
-    function fetch(){
-      if(currentValue){
-        searcher(currentValue).then(res=>{
+    function fetch() {
+      if (currentValue) {
+        searcher(currentValue).then(res => {
           setData(res.data);
         });
-      }else {
+      } else {
         setData([]);
       }
     }
@@ -42,7 +42,7 @@ export default function BHeader() {
   return (
     <>
       <Header className={styles.mainHeader}>
-        <h1 className={styles.title}>BESTBUY</h1>
+        <h1 className={styles.title}>GGSHOP</h1>
       </Header>
       <Header className={styles.subHeader}>
         <Menu className={styles.subHeaderNav} mode="horizontal">
@@ -66,9 +66,9 @@ export default function BHeader() {
             notFoundContent={null}
           >
             {options}
-            
+
           </Select>
-          <Link  key="id" href={"/product/"+id}>
+          <Link key="id" href={"/product/" + id}>
             <Button shape="circle" icon={<SearchOutlined />} disabled={disabled}>
             </Button>
           </Link>

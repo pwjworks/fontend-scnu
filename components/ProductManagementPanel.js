@@ -5,7 +5,7 @@ import delProducts from '../pages/api/dashboard/del-products';
 import getProducts from '../pages/api/dashboard/get-products';
 import addProduct from '../pages/api/dashboard/add-product';
 import updateProduct from '../pages/api/dashboard/update-product';
-
+import { useRouter } from 'next/router'
 
 const { Dragger } = Upload;
 
@@ -13,7 +13,7 @@ const { Dragger } = Upload;
 
 
 export default function UserManagementPanel() {
-
+  const router = useRouter()
   const [products, setProducts] = useState([]);    // 用户数据
   const [selected, setSelected] = useState([]);    // 已选数据
   const [disabled, setDisabled] = useState(true);  // 对话框可见性
@@ -126,12 +126,17 @@ export default function UserManagementPanel() {
       setLoading(true);
       console.log(values);
       addProduct(values).then((res) => {
-        notification.open({
-          message: '添加成功',
-          description:
-            '已经插入' + res.data.ret + '条数据',
-          icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-        });
+        console.log(res);
+        if (res.data.errorCode === 200) {
+          notification.open({
+            message: '添加成功',
+            description:
+              '已经插入' + res.data.ret + '条数据',
+            icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+          });
+        } else if (res.data.errorCode === 2001) {
+          router.push("/login");
+        }
       });
       setLoading(false);
     };
