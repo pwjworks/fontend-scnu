@@ -73,8 +73,7 @@ function Child() {
     })
   }
 
-  const handleUpdate=function(e){
-    const productId=e.target.attributes.productid.value;
+  const handleUpdate=function(productId){
     const num=e.target.ariaValueNow;
 
     updateCart({
@@ -106,7 +105,7 @@ function Child() {
           </div>
           <div className={styles.pricenumInfo}>
             <Title level={5}>数量</Title>
-            <InputNumber productid={item.productId} onPressEnter={handleUpdate} className={styles.num} defaultValue={item.productNum}></InputNumber>
+            <InputNumber onPressEnter={handleUpdate(item.productId)} className={styles.num} defaultValue={item.productNum}></InputNumber>
           </div>
           <Button onClick={()=>handleDelete(item.itemId)} danger>删除</Button>
         </div>
