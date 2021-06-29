@@ -103,8 +103,8 @@ export async function getServerSideProps(context) {
   const popular = await getPopular();
   return {
     props: {
-      "products": res.data,
-      "popular": popular.data
+      "products": res.data.data,
+      "popular": popular.data.data
       // props for your component
     }
   }

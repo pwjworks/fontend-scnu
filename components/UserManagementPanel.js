@@ -20,7 +20,7 @@ export default function UserManagementPanel() {
   useEffect(() => {
     getCustomers().then(res => {
       console.log(res);
-      if (res.data.success){
+      if (res.data.success) {
         setCustomers(res.data.data);
       }
     })
@@ -47,11 +47,11 @@ export default function UserManagementPanel() {
   const handleDelete = function () {
     if (selected.length !== 0) {
       delCustomers({ ids: selected }).then((res) => {
-        if(res.data.success){
+        if (res.data.success) {
           notifyOK('删除成功');
           setCustomers(res.data.data);
           setSelected([]);
-        }else {
+        } else {
           notifyFail(res.data.msg);
         }
       })
@@ -85,9 +85,9 @@ export default function UserManagementPanel() {
       console.log(values);
       addCustomer(values).then((res) => {
         console.log(res);
-        if(res.data.success) {
+        if (res.data.success) {
           notifyOK('已经插入' + res.data.data + '条数据');
-        }else{
+        } else {
           notifyFail(res.data.msg);
         }
       });
@@ -210,9 +210,9 @@ export default function UserManagementPanel() {
     try {
       const row = await form.validateFields();
       updateCustomer(row).then((res) => {
-        if(res.data.success) {
+        if (res.data.success) {
           notifyOK("已经更新数据");
-        }else {
+        } else {
           notifyFail(res.data.msg);
         }
         setCustomers(res.data.data);

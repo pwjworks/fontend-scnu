@@ -1,4 +1,4 @@
-import { Layout, Empty, Card, Image, Typography, Button,Space } from "antd";
+import { Layout, Empty, Image, Typography, Button } from "antd";
 import React, { useState, useEffect } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import styles from "../../styles/[id].module.css";
@@ -12,7 +12,7 @@ const { Footer } = Layout;
 
 const getAllProductsId = async function () {
   const res = await getProductsId();
-  return res.data.map(productId => {
+  return res.data.data.map(productId => {
     return {
       params: {
         id: productId.toString()
@@ -37,18 +37,17 @@ export default function Parent({ postData }) {
 }
 
 function Child({ postData }) {
-  console.log(postData);
   return (
     <>
       <BHeader></BHeader>
       <Layout >
-      <div className={styles.mainContainer}>
-        <div className={styles.previewWrap}>
-          <Image
-            width={450}
-            height={450}
-            alt="example" src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/"+postData.productId+".jpg"} />
-        </div>
+        <div className={styles.mainContainer}>
+          <div className={styles.previewWrap}>
+            <Image
+              width={450}
+              height={450}
+              alt="example" src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/" + postData.productId + ".jpg"} />
+          </div>
 
           <div className={styles.infoWrap}>
             <Title level={4}>
@@ -59,7 +58,7 @@ function Child({ postData }) {
 
               <Text className={styles.info} strong>限时打折:</Text>
               <Text type="danger" className={styles.realPrice} strong>{postData.price}</Text>
-              <Text className={styles.deletedPrice} delete>{postData.price*10}</Text>
+              <Text className={styles.deletedPrice} delete>{postData.price * 10}</Text>
             </div>
             <p className={styles.deliverInfo}>由 京东 发货, 华硕京东自营旗舰店提供售后服务. 有货（外地跨区调货）,暂免调货服务费. 18:00前下单，预计06月27日(周日)送达，受道路资源影响，您的订单可能会有所延迟，我们将尽快为您送达，请您耐心等待！</p>
             <div className={styles.btn}>
@@ -85,9 +84,10 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const postData = await getProductDetails(params.id);
+  console.log(postData);
   return {
     props: {
-      "postData": postData.data
+      "postData": postData.data.data
     }
   }
 }
