@@ -72,7 +72,6 @@ function Child(props) {
       }
     }
   }
-  console.log(popular);
   return (
     <>
       <Layout>

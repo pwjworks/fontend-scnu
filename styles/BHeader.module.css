@@ -1,15 +1,14 @@
 .mainHeader {
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70px;
+    height: 132px;
     background: #F7F8FA;
 }
 
 .title {
-    display: block;
-    margin: auto;
-    font-size: 50px;
+    margin-top: 35px;
 }
 
 .subHeader {

@@ -1,9 +1,10 @@
-import { Menu, Layout, Select, Button } from 'antd';
+import { Menu, Layout, Select, Button,Image,Typography  } from 'antd';
 import { UserOutlined, ShoppingCartOutlined, SearchOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import searcher from '../pages/api/search/searcher';
 import Link from 'next/link'
 
+const { Title } = Typography;
 const { Option } = Select;
 const { Header } = Layout;
 import styles from '../styles/BHeader.module.css';
@@ -44,7 +45,8 @@ export default function BHeader() {
   return (
     <>
       <Header className={styles.mainHeader}>
-        <h1 className={styles.title}>GGSHOP</h1>
+        <Image preview={false} src="./title.jpg" width={500}></Image>
+        <Title level={1} underline className={styles.title}>For Your Better Life</Title>
       </Header>
       <Header className={styles.subHeader}>
         <Menu className={styles.subHeaderNav} mode="horizontal">

@@ -1,43 +1,51 @@
-.main{
+.main {
     width: 100%;
     display: flex;
     justify-content: center;
 }
-.mainContainer{
+
+.mainContainer {
     margin-top: 40px;
     padding: 28px;
     border-radius: 20px;
     background: white;
     width: 1200px;
 }
-.pricenumInfo{
+
+.pricenumInfo {
     text-align: center;
     display: flex;
     flex-direction: column;
 }
 
-.price{
+.price {
     margin-top: 40px;
 }
-.num{
+
+.num {
     margin-top: 20px;
 }
-.extra{
+
+.extra {
     width: 340px;
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.btnContainer{
+
+.btnContainer {
     display: flex;
     flex-direction: column;
 }
-.btn{
+
+.btn {
     margin-top: 20px;
     margin-right: 20px;
 }
-.submitInfo{
+
+.submitInfo {
+    padding: 30px;
     float: right;
     height: 180px;
     width: 380px;
