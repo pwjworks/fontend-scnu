@@ -31,7 +31,7 @@ export default function BHeader() {
     function fetch() {
       if (currentValue) {
         searcher(currentValue).then(res => {
-          if(res.data.success) {
+          if (res.data.success) {
             setData(res.data.data);
           }
         });
@@ -55,7 +55,7 @@ export default function BHeader() {
         <div className={styles.subHeaderRight}>
           <Link key="user" href="/login"><UserOutlined style={{ fontSize: '20px' }} /></Link>
 
-          <Link key="user" href="/dashboard"><ShoppingCartOutlined style={{ fontSize: '20px' }} /></Link>
+          <Link key="shoppingcert" href="/dashboard"><ShoppingCartOutlined style={{ fontSize: '20px' }} /></Link>
           <Select
             className={styles.search}
             showSearch

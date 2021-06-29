@@ -27,7 +27,7 @@ export default function UserManagementPanel() {
   useEffect(() => {
     getProducts().then(res => {
       console.log(res);
-      setProducts(res.data);
+      setProducts(res.data.data);
     })
   }, []);
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function UserManagementPanel() {
     accept: ".jpg",
     action: 'http://localhost:8080/picUpload',
     headers: {
-      'Authorization':localStorage.getItem('Authorization'),
+      'Authorization': localStorage.getItem('Authorization'),
     },
     data: {
       id: selected[0]

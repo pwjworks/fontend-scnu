@@ -1,0 +1,48 @@
+.main{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.mainContainer{
+    margin-top: 40px;
+    padding: 28px;
+    border-radius: 20px;
+    background: white;
+    width: 1200px;
+}
+.pricenumInfo{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.price{
+    margin-top: 40px;
+}
+.num{
+    margin-top: 20px;
+}
+.extra{
+    width: 340px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btnContainer{
+    display: flex;
+    flex-direction: column;
+}
+.btn{
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.submitInfo{
+    float: right;
+    height: 180px;
+    width: 380px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
