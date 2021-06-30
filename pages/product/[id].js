@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import styles from "../../styles/[id].module.css";
 import BHeader from "../../components/BHeader";
-import getProductsId from '../api/product/get-products-id'
 import getProductDetails from "../api/product/get-product-details";
 import addItem from "../api/shoppingcart/add-item"
 import { useRouter } from 'next/router'
@@ -13,18 +12,18 @@ import { notifyOK, notifyFail } from '../../utils/notify'
 const { Title, Text } = Typography;
 const { Footer } = Layout;
 
-const getAllProductsId = async function () {
-  const res = await getProductsId();
-  return res.data.data.map(productId => {
-    return {
-      params: {
-        id: productId.toString()
-      }
-    }
-  })
-}
+// const getAllProductsId = async function () {
+//   const res = await getProductsId();
+//   return res.data.data.map(productId => {
+//     return {
+//       params: {
+//         id: productId.toString()
+//       }
+//     }
+//   })
+// }
 
-export default function Parent({ postData }) {
+export default function Parent() {
   const [showChild, setShowChild] = useState(false);
   // Wait until after client-side hydration to show
   useEffect(() => {
@@ -36,11 +35,18 @@ export default function Parent({ postData }) {
     return (<Empty description="loading..." />);
   }
 
-  return <Child postData={postData} />;
+  return <Child />;
 }
 
-function Child({ postData }) {
-  const router = useRouter()
+function Child() {
+  const router= useRouter();
+  const [postData,setPostData] =useState([]);
+  const { id } = router.query;
+  useEffect(() =>{
+    getProductDetails(id).then(res=>{
+      setPostData(res.data.data);
+    })
+  },[])
   const handleAdd = function (productId) {
     const username = window.sessionStorage.getItem("username");
     if (username == null) {
@@ -90,20 +96,20 @@ function Child({ postData }) {
   )
 }
 
-export async function getStaticPaths() {
-  const paths = await getAllProductsId();
-  return {
-    paths,
-    fallback: false
-  }
-  // Return a list of possible value for id
-}
+// export async function getStaticPaths() {
+//   const paths = await getAllProductsId();
+//   return {
+//     paths,
+//     fallback: false
+//   }
+//   // Return a list of possible value for id
+// }
 
-export async function getStaticProps({ params }) {
-  const postData = await getProductDetails(params.id);
-  return {
-    props: {
-      "postData": postData.data.data
-    }
-  }
-}
+// export async function getStaticProps({ params }) {
+//   const postData = await getProductDetails(params.id);
+//   return {
+//     props: {
+//       "postData": postData.data.data
+//     }
+//   }
+// }

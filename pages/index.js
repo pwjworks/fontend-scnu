@@ -28,7 +28,6 @@ export default function Parent(props) {
 
 
 function Child(props) {
-  console.log(props);
   const cols = [];
   const popular = [];
   for (let i = 0; i < props.products.length; i++) {
