@@ -1,11 +1,13 @@
-import { Layout, Empty, Image, Typography, Button, List, Avatar,Form, Space, Tabs, InputNumber, Radio,Checkbox  } from "antd";
+import { Layout, Empty, Image, Typography, Button, List, Steps, Avatar, Form, Space, Tabs, InputNumber, Radio, Checkbox } from "antd";
 import BHeader from "../../components/BHeader";
 import React, { useState, useEffect } from 'react';
 import styles from "../../styles/user.module.css"
 import getAll from "../api/shoppingcart/get-shoppingCart"
 import updateCart from "../api/shoppingcart/update-shoppingCart"
 import deleteItem from "../api/shoppingcart/delete-item";
-import { notifyOK, notifyFail } from '../utils/notify'
+import intoOrder from "../api/shoppingcart/into-order";
+import getOrder from "../api/shoppingcart/get-order";
+import { notifyOK, notifyFail } from '../utils/notify';
 const { TabPane } = Tabs;
 const { Content, Footer } = Layout;
 const { Title } = Typography;
@@ -28,43 +30,46 @@ export default function Parent() {
 
 function Child() {
   const [data, setData] = useState([]);
-  const [cartId,setCartId] = useState('');
-  const [totalPrice,setTotalPrice]=useState(0);
-  const items=[];
+  const [cartId, setCartId] = useState('');
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [productIds, setProductIds] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const items = [];
 
   useEffect(() => {
-    console.log(data);
-    let tmp=0;
-
-    if(data.length!==0){
-      data.forEach((item)=>{
-        tmp+=item.price*item.productNum;
+    let tmp = 0;
+    let ids = []
+    if (data.length !== 0) {
+      data.forEach((item) => {
+        tmp += item.price * item.productNum;
+        ids.push(item.productId);
       })
       setCartId(data[0].cartId);
       setTotalPrice(tmp);
-    }else {
+      setProductIds(ids);
+    } else {
       setTotalPrice(0);
     }
-  },[data]);
+  }, [data]);
 
   useEffect(() => {
-    getAll(window.sessionStorage.getItem("username")).then(res=>{
+    getAll(window.sessionStorage.getItem("username")).then(res => {
       console.log(res);
-      if(res.data.success){
+      if (res.data.success) {
         setData(res.data.data);
-
       }
     })
+
   }, [])
 
-  const handleDelete=function(id){
+  const handleDelete = function (id) {
 
 
-    deleteItem({id}).then(res=>{
-      if(res.data.success){
-        getAll(window.sessionStorage.getItem("username")).then(res=>{
+    deleteItem({ id }).then(res => {
+      if (res.data.success) {
+        getAll(window.sessionStorage.getItem("username")).then(res => {
           console.log(res);
-          if(res.data.success){
+          if (res.data.success) {
             setData(res.data.data);
             notifyOK("删除成功");
           }
@@ -73,18 +78,34 @@ function Child() {
     })
   }
 
-  const handleUpdate=function(productId){
-    const num=e.target.ariaValueNow;
+  const handlePay = function () {
+    const username = window.sessionStorage.getItem("username");
+    const request = {
+      username,
+      productIds
+    };
+    console.log(request);
+    intoOrder(
+      {
+        username,
+        productIds
+      }
+    ).then(res => {
+      console.log(res);
+    })
+  }
+  const handleUpdate = function (e, productId) {
+    const num = e.target.ariaValueNow;
 
     updateCart({
       cartId,
       productId,
-      productNum:num
+      productNum: num
     }).then(res => {
-      if(res.data.success){
-        getAll(window.sessionStorage.getItem("username")).then(res=>{
+      if (res.data.success) {
+        getAll(window.sessionStorage.getItem("username")).then(res => {
           console.log(res);
-          if(res.data.success){
+          if (res.data.success) {
             setData(res.data.data);
             notifyOK("更新成功");
           }
@@ -93,31 +114,31 @@ function Child() {
     })
   }
 
-  for(let item of data){
+  for (let item of data) {
     items.push((
-    <List.Item key={item.itemId}
-    extra={
-      <>
-        <div className={styles.extra}>
-          <div className={styles.pricenumInfo}>
-            <Title level={5}>金额</Title>
-            <Title level={5} type="danger" className={styles.price}>{item.price*item.productNum}</Title>
-          </div>
-          <div className={styles.pricenumInfo}>
-            <Title level={5}>数量</Title>
-            <InputNumber onPressEnter={handleUpdate(item.productId)} className={styles.num} defaultValue={item.productNum}></InputNumber>
-          </div>
-          <Button onClick={()=>handleDelete(item.itemId)} danger>删除</Button>
-        </div>
-      </>
-    }
-  >
-    <List.Item.Meta
-      avatar={<Image src="./3090.jpg" width={150}></Image>}
-      title={<a>{item.productName}</a>}
-      description={<><p>单价：</p><Title level={5} type="danger">{item.price}</Title></>}
-    />
-  </List.Item>
+      <List.Item key={item.itemId}
+        extra={
+          <>
+            <div className={styles.extra}>
+              <div className={styles.pricenumInfo}>
+                <Title level={5}>金额</Title>
+                <Title level={5} type="danger" className={styles.price}>{item.price * item.productNum}</Title>
+              </div>
+              <div className={styles.pricenumInfo}>
+                <Title level={5}>数量</Title>
+                <InputNumber onPressEnter={(e) => handleUpdate(e, item.productId)} className={styles.num} defaultValue={item.productNum}></InputNumber>
+              </div>
+              <Button onClick={() => handleDelete(item.itemId)} danger>删除</Button>
+            </div>
+          </>
+        }
+      >
+        <List.Item.Meta
+          avatar={<Image src="./3090.jpg" width={150}></Image>}
+          title={<a>{item.productName}</a>}
+          description={<><p>单价：</p><Title level={5} type="danger">{item.price}</Title></>}
+        />
+      </List.Item>
     ));
   }
   return (
@@ -133,20 +154,23 @@ function Child() {
                   bordered
                   itemLayout="vertical"
                   size="large"
-                  >
-                    {items}
-                    </List>
+                >
+                  {items}
+                </List>
                 <div className={styles.submitInfo}>
                   <p>已选商品<Title level={5} type="danger">{data.length}</Title>件</p>
                   <p>总价:<Title level={5} type="danger">{totalPrice}</Title></p>
-                  <Button type="primary" size="large">立即购买</Button>
+                  <Button onClick={handlePay} type="primary" size="large">立即购买</Button>
                 </div>
               </TabPane>
               <TabPane tab="订单" key="2">
-                Content of card tab 2
-              </TabPane>
-              <TabPane tab="已完成订单" key="3">
-                Content of card tab 3
+                <List
+                  bordered
+                  itemLayout="vertical"
+                  size="large"
+                >
+
+                </List>
               </TabPane>
             </Tabs>
           </div>

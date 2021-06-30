@@ -1,4 +1,4 @@
-import { Menu, Layout, Select, Button,Image,Typography  } from 'antd';
+import { Menu, Layout, Select, Button, Image, Typography } from 'antd';
 import { UserOutlined, ShoppingCartOutlined, SearchOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import searcher from '../pages/api/search/searcher';
@@ -45,7 +45,7 @@ export default function BHeader() {
   return (
     <>
       <Header className={styles.mainHeader}>
-        <Image preview={false} src="./title.jpg" width={500}></Image>
+        <Image preview={false} src="/title.jpg" width={500}></Image>
         <Title level={1} underline className={styles.title}>For Your Better Life</Title>
       </Header>
       <Header className={styles.subHeader}>
