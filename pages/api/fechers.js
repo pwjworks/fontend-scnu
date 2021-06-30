@@ -16,7 +16,7 @@ axios.interceptors.request.use(
 
 export function getFetcher(url) {
     return new Promise((resolve, reject) => {
-        axios.get(url).then((response) => {
+        axios.get("http://ssmscnu:8080/"+url).then((response) => {
             resolve(response);
         }, (error) => {
             reject(error);
@@ -26,7 +26,7 @@ export function getFetcher(url) {
 
 export function postFetcher(url, params) {
     return new Promise((resolve, reject) => {
-        axios.post(url, params).then((response) => {
+        axios.post("http://ssmscnu:8080/"+url, params).then((response) => {
             resolve(response);
         }, (error) => {
             reject(error);
