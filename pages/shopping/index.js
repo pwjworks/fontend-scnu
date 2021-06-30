@@ -11,6 +11,7 @@ import { notifyOK, notifyFail } from '../utils/notify';
 const { TabPane } = Tabs;
 const { Content, Footer } = Layout;
 const { Title } = Typography;
+const { Step } = Steps;
 
 
 export default function Parent() {
@@ -169,7 +170,22 @@ function Child() {
                   itemLayout="vertical"
                   size="large"
                 >
-
+                  <List.Item
+                    extra={
+                      <div>
+                        <Steps current={1}>
+                          <Step title="Finished" description="This is a description." />
+                          <Step title="In Progress" subTitle="Left 00:00:08" description="This is a description." />
+                          <Step title="Waiting" description="This is a description." />
+                        </Steps>
+                      </div>
+                    }
+                  >
+                    <List.Item.Meta
+                      title={<a>rtx 3090</a>}
+                      description="rtx 3090"
+                    />
+                  </List.Item>
                 </List>
               </TabPane>
             </Tabs>
