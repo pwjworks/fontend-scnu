@@ -6,7 +6,7 @@ import getAll from "../api/shoppingcart/get-shoppingCart"
 import updateCart from "../api/shoppingcart/update-shoppingCart"
 import deleteItem from "../api/shoppingcart/delete-item";
 import intoOrder from "../api/shoppingcart/into-order";
-import getOrder from "../api/shoppingcart/get-order";
+import getOrders from "../api/shoppingcart/get-order";
 import { notifyOK, notifyFail } from '../utils/notify';
 const { TabPane } = Tabs;
 const { Content, Footer } = Layout;
@@ -36,7 +36,7 @@ function Child() {
   const [productIds, setProductIds] = useState([]);
   const [orders, setOrders] = useState([]);
   const items = [];
-
+  const orderList = [];
   useEffect(() => {
     let tmp = 0;
     let ids = []
@@ -53,13 +53,21 @@ function Child() {
     }
   }, [data]);
 
+
   useEffect(() => {
+    getOrders(window.sessionStorage.getItem("username")).then(res => {
+      if (res.data.success) {
+        console.log(res.data);
+        setOrders(res.data.data);
+      } else {
+        notifyFail(res.data.msg);
+      }
+    });
     getAll(window.sessionStorage.getItem("username")).then(res => {
-      console.log(res);
       if (res.data.success) {
         setData(res.data.data);
       }
-    })
+    });
 
   }, [])
 
@@ -69,7 +77,6 @@ function Child() {
     deleteItem({ id }).then(res => {
       if (res.data.success) {
         getAll(window.sessionStorage.getItem("username")).then(res => {
-          console.log(res);
           if (res.data.success) {
             setData(res.data.data);
             notifyOK("删除成功");
@@ -81,19 +88,29 @@ function Child() {
 
   const handlePay = function () {
     const username = window.sessionStorage.getItem("username");
-    const request = {
-      username,
-      productIds
-    };
-    console.log(request);
     intoOrder(
       {
         username,
         productIds
       }
     ).then(res => {
-      console.log(res);
-    })
+      if (res.data.success) {
+        getAll(window.sessionStorage.getItem("username")).then(res => {
+          if (res.data.success) {
+            setData(res.data.data);
+            notifyOK("购买成功");
+          }
+        });
+        getOrders(window.sessionStorage.getItem("username")).then(res => {
+          if (res.data.success) {
+            console.log(res.data);
+            setOrders(res.data.data);
+          } else {
+            notifyFail(res.data.msg);
+          }
+        });
+      }
+    });
   }
   const handleUpdate = function (e, productId) {
     const num = e.target.ariaValueNow;
@@ -105,16 +122,42 @@ function Child() {
     }).then(res => {
       if (res.data.success) {
         getAll(window.sessionStorage.getItem("username")).then(res => {
-          console.log(res);
           if (res.data.success) {
             setData(res.data.data);
             notifyOK("更新成功");
           }
-        })
+        });
+        getOrders(window.sessionStorage.getItem("username")).then(res => {
+          if (res.data.success) {
+            setOrders(res.data.data);
+          } else {
+            notifyFail(res.data.msg);
+          }
+        });
       }
     })
   }
-
+  for (let item of orders) {
+    orderList.push((
+      <List.Item
+        key={item.itemId}
+        extra={
+          <div className={styles.processing}>
+            <Steps current={item.stage}>
+              <Step title="已付款" description="使用支付宝付款" />
+              <Step title="快递运送中" description="顺丰快递" />
+              <Step title="已收货" description={item.receiverAddress} />
+            </Steps>
+          </div>
+        }
+      >
+        <List.Item.Meta
+          title={item.productName}
+          description={"数量：" + item.productNum + " 总价：" + item.productNum * item.price}
+        />
+      </List.Item>
+    ))
+  }
   for (let item of data) {
     items.push((
       <List.Item key={item.itemId}
@@ -135,7 +178,7 @@ function Child() {
         }
       >
         <List.Item.Meta
-          avatar={<Image src="./3090.jpg" width={150}></Image>}
+          avatar={<Image src={"https://ssm-scnu.oss-cn-guangzhou.aliyuncs.com/pic/" + item.productId + ".jpg"} width={150}></Image>}
           title={<a>{item.productName}</a>}
           description={<><p>单价：</p><Title level={5} type="danger">{item.price}</Title></>}
         />
@@ -170,29 +213,18 @@ function Child() {
                   itemLayout="vertical"
                   size="large"
                 >
-                  <List.Item
-                    extra={
-                      <div>
-                        <Steps current={1}>
-                          <Step title="Finished" description="This is a description." />
-                          <Step title="In Progress" subTitle="Left 00:00:08" description="This is a description." />
-                          <Step title="Waiting" description="This is a description." />
-                        </Steps>
-                      </div>
-                    }
-                  >
-                    <List.Item.Meta
-                      title={<a>rtx 3090</a>}
-                      description="rtx 3090"
-                    />
-                  </List.Item>
+                  {orderList}
                 </List>
               </TabPane>
             </Tabs>
           </div>
         </div>
       </Layout>
-      <Footer>123</Footer>
+      <Footer>
+        <div>
+          <Title level={3}>Power By E322B!</Title>
+        </div>
+      </Footer>
     </>
   )
 }

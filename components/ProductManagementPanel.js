@@ -92,14 +92,13 @@ export default function UserManagementPanel() {
   const handleDelete = function () {
     if (selected.length !== 0) {
       delProducts({ ids: selected }).then((res) => {
-        console.log(res);
         notification.open({
           message: '删除成功',
           description:
-            '已经删除' + res.data.ret + '条数据',
+            '删除数据',
           icon: <SmileOutlined style={{ color: '#108ee9' }} />,
         });
-        setProducts(res.data.productInfos);
+        setProducts(res.data.data);
         setSelected([]);
       })
     }
@@ -110,7 +109,7 @@ export default function UserManagementPanel() {
   };
   const handleCancel = () => {
     getProducts().then(res => {
-      getProducts(res.data);
+      setProducts(res.data.data);
     })
     setVisible(false);
   };
@@ -129,17 +128,15 @@ export default function UserManagementPanel() {
   const onFinish = (values) => {
     if (values !== null) {
       setLoading(true);
-      console.log(values);
       addProduct(values).then((res) => {
-        console.log(res);
-        if (res.data.errorCode === 200) {
+        if (res.data.success) {
           notification.open({
             message: '添加成功',
             description:
-              '已经插入' + res.data.ret + '条数据',
+              '已经插入数据',
             icon: <SmileOutlined style={{ color: '#108ee9' }} />,
           });
-        } else if (res.data.errorCode === 2001) {
+        } else if (res.data.code === 2001) {
           router.push("/login");
         }
       });

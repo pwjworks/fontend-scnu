@@ -78,9 +78,8 @@ function Child({ postData }) {
               <Text type="danger" className={styles.realPrice} strong>{postData.price}</Text>
               <Text className={styles.deletedPrice} delete>{postData.price * 10}</Text>
             </div>
-            <p className={styles.deliverInfo}>由 京东 发货, 华硕京东自营旗舰店提供售后服务. 有货（外地跨区调货）,暂免调货服务费. 18:00前下单，预计06月27日(周日)送达，受道路资源影响，您的订单可能会有所延迟，我们将尽快为您送达，请您耐心等待！</p>
+            <p className={styles.deliverInfo}>由 GGSHOP 发货, GGSHOP自营旗舰店提供售后服务. 有货（外地跨区调货）,暂免调货服务费. 18:00前下单，预计两天后送达，受道路资源影响，您的订单可能会有所延迟，我们将尽快为您送达，请您耐心等待！</p>
             <div className={styles.btn}>
-              <Button className={styles.buybtn} type="primary" icon={<DownloadOutlined />} size="large">立即购买</Button>
               <Button onClick={() => handleAdd(postData.productId)} className={styles.addbtn} type="primary" icon={<DownloadOutlined />} size="large">加入购物车</Button>
             </div>
           </div>
