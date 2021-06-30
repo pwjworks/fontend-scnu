@@ -7,7 +7,7 @@ import getProductsId from '../api/product/get-products-id'
 import getProductDetails from "../api/product/get-product-details";
 import addItem from "../api/shoppingcart/add-item"
 import { useRouter } from 'next/router'
-import { notifyOK, notifyFail } from '../utils/notify'
+import { notifyOK, notifyFail } from '../../utils/notify'
 
 
 const { Title, Text } = Typography;

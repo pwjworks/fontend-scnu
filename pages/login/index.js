@@ -5,7 +5,7 @@ import styles from '../../styles/LoginRegister.module.css';
 import register from '../api/login/register';
 import login from '../api/login/login';
 import { useRouter } from 'next/router'
-import { notifyOK, notifyFail } from '../utils/notify'
+import { notifyOK, notifyFail } from '../../utils/notify'
 
 const { Footer, Content } = Layout;
 const { Title } = Typography;

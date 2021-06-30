@@ -7,7 +7,7 @@ import updateCart from "../api/shoppingcart/update-shoppingCart"
 import deleteItem from "../api/shoppingcart/delete-item";
 import intoOrder from "../api/shoppingcart/into-order";
 import getOrders from "../api/shoppingcart/get-order";
-import { notifyOK, notifyFail } from '../utils/notify';
+import { notifyOK, notifyFail } from '../../utils/notify';
 const { TabPane } = Tabs;
 const { Content, Footer } = Layout;
 const { Title } = Typography;

@@ -5,7 +5,7 @@ import delCustomers from '../pages/api/dashboard/del-customers';
 import getCustomers from '../pages/api/dashboard/get-customers';
 import addCustomer from '../pages/api/dashboard/add-customer';
 import updateCustomer from '../pages/api/dashboard/update-customer';
-import { notifyOK, notifyFail } from '../pages/utils/notify'
+import { notifyOK, notifyFail } from '../utils/notify'
 
 export default function UserManagementPanel() {
 
